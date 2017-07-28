@@ -1,0 +1,3 @@
+#ignore .envg
+*.env
+__pycache__/
