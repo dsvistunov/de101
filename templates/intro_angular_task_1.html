@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Crash intro to AngularJS</title>
+    <meta charset="utf-8">
+    <!-- Load Angular Javascript MVW Framework -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+</head>
+{% raw %}
+<body ng-app="DirectiveApp" ng-controller="DirectiveCtrl">
+    <p>Update <input type="number" ng-model="seconds"></p>
+   <time-directive color="green" seconds="seconds"></time-directive>
+   <script>
+       angular.module("DirectiveApp", []);
+       angular.module("DirectiveApp").controller('DirectiveCtrl', DirectiveCtrl)
+           .directive('timeDirective', timeDirective);
+       function DirectiveCtrl($scope) {
+           $scope.seconds = 1;
+       };
+       function timeDirective() {
+
+            function link(scope, element, attrs) {
+                var interval = null;
+                scope.$watch(attrs.seconds, function () {
+                    var seconds = scope.seconds ? scope.seconds * 1000 : 1000;
+
+                    if (interval) {
+                        clearInterval(interval);
+                    }
+
+                    interval = setInterval(function() {
+                        scope.$apply(function(){
+                            scope.time = new Date();
+                        });
+                    }, seconds);
+                })
+            }
+           return {
+               link: link,
+               restrict: 'E', // matches on element name
+               scope: {
+                   seconds: '=',
+                   color: '@' // one-way binding
+               },
+               template: '<div style="color:{{color}}"> Current time: <span>{{time|date:"medium"}}</span></div>'
+           };
+       }
+   </script>
+{% endraw %}
+</body>
+</html>

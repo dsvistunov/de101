@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body style="background-color: lightgray">
+   <script type="text/javascript">
+       // Create the object contained coordinates, radius and color of all circles
+       var circle_data = [
+           { x: 25, y: 25, r: 25, color: "purple" },
+           { x: 250, y: 100, r: 50, color: "red" },
+           { x: 10, y: 200, r: 30, color: "grey" },
+           { x: 450, y: 250, r: 15, color: "blue" },
+           { x: 310, y: 170, r: 70, color: "lightsteelblue" },
+           { x: 25, y: 35, r: 10, color: "orange" },
+           { x: 425, y: 55, r: 10 }
+       ];
+
+       var svg_container = d3.select("body").append("svg")
+           .attr("width", 500)
+           .attr("height", 300)
+           .style("background-color", "white");
+// `selectAll` method select all element with the same HTML tag name or class name or id name, etc.
+       // and combine all them in array like structure thus that,
+       // for example, each `attr` method will be applied to each of them (see below).
+       var circles = svg_container.selectAll("circle")
+           // `data(array)` sets an array of features and values, which will be connected with
+           .data(circle_data)    // selected elements obtained in `selectAll` method
+           // `enter()` binds all selected elements with data value from `array`
+           .enter()   // i.e. each element of `array` corresponds to the respective selected element
+           .append("circle");   // add circle SVG elements as much as the length of `array`
+       // Now each `attr` method will be applied to each circle selected previously
+       circles
+           // To set different values to various circles we should define them using
+           // specific functions returning different values
+           .attr("cx", function (d) { return d.x; })   // here `d` is an element from "circle_data"
+           .attr("cy", function (d) { return d.y; })   // using `d.y` we refer to `y` of some "circle_data"'s element
+           .attr("r", function (d) { return d.r; })
+           .style("fill", function(d) { return d.color; });
+
+// Add an rectangle finally
+       svg_container.append("rect")
+           .attr("x", 75)
+           .attr("y", 125)
+           .attr("width", 100)
+           .attr("height", 150)
+           .style("fill", "green")
+           .attr("stroke", "pink")
+           .attr("stroke-width", 5);
+   </script>
+</body>
+</html>

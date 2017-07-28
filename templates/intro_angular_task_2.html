@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Crash intro to AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+</head>
+<body ng-app="RecordsApp" ng-controller="RecordCtrl">
+{% raw %}
+<form ng-submit="Add()">
+    <div><lable>Name</lable><input type="text" ng-model="newName"></div>
+    <div><lable>Email</lable><input type="text" ng-model="newEmail"></div>
+    <div><lable>Phone</lable><input type="text" ng-model="newPhone"></div>
+    <div><button type="submit">Save</button></div>
+</form>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phome</th>
+        <th>Action</th>
+    </tr>
+    <tr ng-repeat="record in records">
+        <td>{{ record.name }}</td>
+        <td>{{ record.email }}</td>
+        <td>{{ record.phone }}</td>
+        <td><button ng-click="Edit($index)">edit</buttonng>|<button ng-click="Delete($index)">delete</button></td>
+    </tr>
+</table>
+<script>
+    var app = angular.module('RecordsApp', []);
+    app.controller('RecordCtrl', function ($scope) {
+        $scope.index = null;
+        $scope.records = [
+            {name: 'Bob', email: 'bob@gmail.com', phone: '063 000 00 00'},
+            {name: 'Nino', email: 'nino@gmail.com', phone: '063 000 50 30'},
+            {name: 'Red', email: 'red@gmail.com', phone: '063 111 11 11'}
+        ];
+        $scope.Add = function () {
+            if (!$scope.newName){
+                return;
+            }
+            if ($scope.index !== null){
+                $scope.Delete($scope.index)
+                $scope.index = null;
+            }
+
+            $scope.records.push({
+                name: $scope.newName,
+                email: $scope.newEmail,
+                phone: $scope.newPhone
+            });
+        };
+        $scope.Delete = function (index) {
+            $scope.records.splice(index, 1);
+        };
+        $scope.Edit = function (index) {
+            $scope.index = index;
+            $scope.newName = $scope.records[index]['name'];
+            $scope.newEmail = $scope.records[index]['email'];
+            $scope.newPhone = $scope.records[index]['phone'];
+        };
+    })
+</script>
+{% endraw %}
+</body>
+</html>

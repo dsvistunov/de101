@@ -1,0 +1,85 @@
+.grid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.75;
+    shape-rendering: crispEdges;
+}
+.grid path {
+    stroke-width: 0;
+}
+.tick line{
+    opacity: 0.3;
+}
+.bar {
+    /* Setup element background color */
+    fill: #3498db;
+    /* Setup border color*/
+    stroke: #000;
+    /* Setup border width*/
+    stroke-width: 4px;
+    opacity: 0.75;
+    }
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2px;
+    }
+bar-chart {
+    width: 960px;
+    /* Make bar-chart directive width the same as svg element*/
+    position: relative;
+    /* The element is positioned relative to its normal position. This helps as with tooltip positioning */
+    margin: 0 auto;
+    /* Center element */
+    }
+.tooltip {
+    position: absolute;
+    /* The element is positioned relative to its first positioned (not static) ancestor element */
+    text-align: center;
+    /* Specifies the horizontal alignment of text in an element */
+    line-height: 1;
+    font-weight: bold;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    /* Text color */
+    border-radius: 2px;
+    border: 2px solid #000;
+    pointer-events: none;
+    /* Prevents all click, state and cursor options on the specified HTML element */
+    top: 0px; left: 0px;
+    /* Start position */
+    }
+.tooltip:after {
+    /* The ::after selector inserts something after the content of each selected element(s) */
+    font-size: 15px;
+    width: 100%;
+    padding: 15px;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "▼";
+    position: absolute;
+    text-align: center;
+    bottom: -30px;
+    /* Move arrow slightly down from tooltip */
+    left: 0px;
+    /* Set left position the same as tooltip */
+    }
+.button {
+    position:relative;
+    left:50%;
+    margin-bottom: 20px;
+}
+/* map directive */
+.country {
+    stroke: #000;
+    stroke-width: 1px;
+}
+map-chart {
+    margin: 30px auto;
+}
+
+.legend {
+    color: #000;
+    border-style: solid;
+}

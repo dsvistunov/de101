@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>D3 Dashboard</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <!-- Load Bootstrap Css Framework -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../static/css/style.css" rel="stylesheet">
+
+    <!-- Load Angular Javascript MVW Framework -->
+    <script src="../static/bower_components/angular/angular.min.js"></script>
+    <!-- Load D3, it helps us with visualizing data -->
+    <script src="../static/bower_components/d3/d3.v3.min.js"></script>
+    <script src="../static/bower_components/topojson/topojson.v0.min.js"></script>
+
+    <script src="../static/client/app/app.module.js"></script>
+    <script src="../static/client/app/services/fb.service.js"></script>
+    <script src="../static/client/app/dashboard/dashboard.controller.js"></script>
+    <script src="../static/client/app/dashboard/bar.directive.js"></script>
+    <script src="../static/client/app/dashboard/map.directive.js"></script>
+
+</head>
+<body>
+<div class="container" ng-app='FbDashboardApp' ng-controller="DashboardController">
+<!-- Jinja will ignore code in {% raw %}{% endraw %} block -->
+{% raw %}
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Post ID</th>
+        <th>Comments</th>
+        <th>Likes</th>
+        <th>Shares</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over posts and create row for each post -->
+    <tr ng-repeat="post in fb_page.posts">
+        <td>{{post.post_id}}</td>
+        <td>{{post.comments}}</td>
+        <td>{{post.likes}}</td>
+        <td>{{post.shares}}</td>
+    </tr>
+    </tbody>
+</table>
+    <bar-chart message="message" posts='fb_page.posts' metric='comments' style="display: block; text-align:center;"></bar-chart>
+    <div><button class="button" ng-click="updateMassage()">{{ message }}</button></div>
+    <map-chart funs='fb_page.funs_by_regin' style="display: block; text-align:center;"></map-chart>
+{% endraw %}
+</div>
+</body>
+</html>

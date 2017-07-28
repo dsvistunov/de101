@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v0.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var width = 960, height = 500; // width and height of the map
+    // D3 Projection
+    var projection = d3.geo.mercator()
+        .translate([width/2, height/2])
+                // translate to center of screen
+        .scale([80])
+        .center([0, 0]);
+    // scale things down so see entire world
+    // Define path generator
+    var path = d3.geo.path()
+            // path generator that converts TopoJSON to SVG paths
+        .projection(projection); // tells path generator to use mercator projection
+    // Create SVG element and append map to the SVG
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+    // Load TopoJSON data and merge with states data
+    ///static/topojson/world.json
+    d3.json("https://gist.githubusercontent.com/abenrob/787723ca91772591b47e/raw/8a7f176072d508218e120773943b595c998991be/world-50m.json", function(error, json) {
+        // Bind the data to the SVG and create one path per TopoJSON feature
+        svg.selectAll("path")
+            .data(topojson.object(json, json.objects.countries).geometries)
+            .enter().append("path")
+            .attr("d", path)
+            .style({"stroke": "#000", "stroke-width": "1", "fill": "#ddd"});
+        });
+
+</script>
+</body>
+</html>
