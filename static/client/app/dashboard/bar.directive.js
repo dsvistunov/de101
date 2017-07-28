@@ -184,14 +184,6 @@
                     ascending = !ascending;
                     };
                 // Create button
-                // d3.select("bar-chart").append("button")
-                //     .attr("type","button")
-                //     .classed("sort", true)
-                //     .text(function(d) {
-                //         return scope.message;
-                //         });
-                // // Handle click event on button
-                // d3.select("bar-chart .sort").on("click", sort);
                 d3.select(".button").on("click", sort);
 
                 var yTextPadding = 10;
