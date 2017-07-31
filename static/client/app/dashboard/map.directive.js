@@ -127,8 +127,11 @@
                         .attr("d", path)
                         .classed('country', true)
                         .attr("fill", function(d) {
+                            console.log(funs_by_region.value[d.id]);
+
                             if(d.id in funs_by_region.value) { // Fill countries depending on the fans amount
                                 var i = Math.floor((funs_by_region.value[d.id] - min_funs) / interval);
+                                console.log(i)
                                 return colors[i > colors.length - 1 ? colors.length - 1 : i];
                             }else {
                                 return '#90EE90'
@@ -143,24 +146,23 @@
                         })
                         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
                 });
-
+                var domaine = function () {
+                        var intervals = [];
+                        var i = colors.length - 2;
+                        for (i; i > 0; i--){
+                            var begin = Math.floor(interval * i);
+                            var end = Math.floor(interval * (i + 0.9));
+                            intervals.push(begin + ' - ' + end)
+                        }
+                        intervals.unshift(">" + Math.floor(interval * 8));
+                        intervals.push("<" + Math.floor(interval * 0.9));
+                        return intervals
+                    };
                 var color = d3.scale.ordinal()
-                    .domain([
-                        ">" + Math.floor(interval*8),
-                        Math.floor(interval*7)+' - '+Math.floor(interval*7.9),
-                        Math.floor(interval*6)+' - '+Math.floor(interval*6.9),
-                        Math.floor(interval*5)+' - '+Math.floor(interval*5.9),
-                        Math.floor(interval*4)+' - '+Math.floor(interval*4.9),
-                        Math.floor(interval*3)+' - '+Math.floor(interval*3.9),
-                        Math.floor(interval*2)+' - '+Math.floor(interval*2.9),
-                        Math.floor(interval)+"-"+Math.floor(interval*1.9),
-                        "<"+Math.floor(interval*0.9)])
+                    .domain(domaine())
                     .range(['#08306b', '#08519c', '#2171b5', '#4292c6','#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff']);
 
                 var legend = svg.append('svg')
-                    // .append('g')
-                    // .attr('height', 175)
-                    // .attr('width', 305)
                     .selectAll('g')
                     .data(color.domain())
                     .enter()
