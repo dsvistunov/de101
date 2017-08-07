@@ -13,8 +13,7 @@
             else {
                 $scope.message = 'Sort descending order'
             }
-        }
-            ;
+        };
         $scope.getFbPage = getFbPage;
         // Fetch National Geographic FB page
         $scope.getFbPage(23497828950);

@@ -127,11 +127,8 @@
                         .attr("d", path)
                         .classed('country', true)
                         .attr("fill", function(d) {
-                            console.log(funs_by_region.value[d.id]);
-
                             if(d.id in funs_by_region.value) { // Fill countries depending on the fans amount
                                 var i = Math.floor((funs_by_region.value[d.id] - min_funs) / interval);
-                                console.log(i)
                                 return colors[i > colors.length - 1 ? colors.length - 1 : i];
                             }else {
                                 return '#90EE90'
